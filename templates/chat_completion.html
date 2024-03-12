@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthorChatbot</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* Responsive styles */
+        @media screen and (max-width: 600px) {
+            .chat-container {
+                max-width: 90%; /* Make the chat container narrower on smaller screens */
+            }
+
+            .back-button {
+                font-size: 14px; /* Reduce font size of the go back button on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="#" class="back-button" onclick="history.back()">Go Back</a>
+        <div class="chat-header">
+            <h1>Coffee with {{author_names}} </h1>
+        </div>
+        <div class="chat-body">
+            <div class="chat-container">
+                {% if completion_text %}
+                    <div class="chat-message">
+                        <p class="bard-message">{{ completion_text }}</p>
+                        <button id="speak-button">Speak</button>
+                    </div>
+                {% else %}
+                <p class="bard-message">{{ loading_text|default:"Preparing to converse..." }}</p>  {# Use default if loading_text is not set #}
+                {% endif %}
+            </div>
+        </div>
+        <div class="chat-input">
+            <form method="POST">
+                {% csrf_token %}
+                <textarea name="content" id="content" rows="5" placeholder="Ask your question or doubts"></textarea><br>
+                <button type="submit">Speak</button>
+            </form>
+        </div>
+        <script>
+            const speakButton = document.getElementById('speak-button');
+            const completionText = document.querySelector('.bard-message');
+
+            speakButton.addEventListener('click', () => {
+                if (completionText.textContent) {
+                    const utterance = new SpeechSynthesisUtterance(completionText.textContent);
+                    // Set voice to a female voice
+                    const voices = window.speechSynthesis.getVoices();
+                    utterance.voice = voices.find(voice => voice.name === 'Google UK English Female');
+                    // Optionally adjust other properties here
+                    window.speechSynthesis.speak(utterance);
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

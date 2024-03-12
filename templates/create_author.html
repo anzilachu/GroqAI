@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Author</title>
+    <style>
+        /* CSS styling goes here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Center the form container horizontally */
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh; /* Set minimum height for full viewport */
+        }
+
+        .form-container {
+            max-width: 400px;
+            padding: 50px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Retain centered text within the form */
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 400; /* Adjust font weight for a slightly bolder look */
+        }
+        .form-input {
+            width: 90%;
+            padding: 15px; /* Increase padding for better spacing */
+            margin-bottom: 15px; /* Adjust margin for better spacing */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px; /* Increase font size for better readability */
+            display: block;
+        }
+        .form-submit {
+            display: inline-block; /* Allow text wrapping for longer button text */
+            padding: 15px 30px; /* Increase padding for better proportions */
+            font-size: 18px; /* Increase font size for better emphasis */
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out; /* Add smooth transition effect */
+        }
+        .form-submit:hover {
+            background-color: #0056b3;
+        }
+        .form-input::placeholder {
+            color: #999; /* Placeholder text color */
+        }
+        .go-back-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-top: 50px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline from the link */
+            transition: background-color 0.2s ease-in-out; /* Add smooth transition effect */
+        }
+        .go-back-button:hover {
+            background-color: #333;
+        }
+        .note {
+            color: rgb(162, 150, 150); /* Red color for the note */
+            margin-top: 20px; /* Add space between the note and the form */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Create Author</h2>
+        <p class="note">Note: Make sure the spelling <br>of author is accurate, for better results.</p>
+        <form action="{% url 'create_author' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="name" class="form-input" placeholder="Author Name" required>
+            <div class="form-group">
+                <p class="note">Note: uploading image is optional !</p>
+                <input type="file" name="image" id="image" accept="image/*" class="form-input">
+            </div>
+            <button type="submit" class="form-submit">Create Author</button>
+        </form>
+    </div>
+    <a href="#" class="go-back-button" onclick="history.back()">Go Back</a>
+</body>
+</html>

@@ -1,0 +1,115 @@
+/* Add your custom styles here to personalize the chat interface */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.chat-container {
+    width: 600px;
+    margin: 50px auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.chat-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;  /* Slightly larger header text */
+    margin-top: 55px;
+}
+
+.chat-history {
+    height: 250px;
+    overflow-y: scroll;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    line-height: 1.5; /* More space between text lines for readability */
+}
+
+.user {
+    background-color: #eee;
+    color: #333;
+}
+
+.bard {
+    background-color: #f5f5f5;
+    color: #000;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(100%);
+    overflow: hidden;
+}
+
+/* Add some personality to the chat input field */
+.chat-input-container {
+    margin-top: 15px;
+    display: flex;
+}
+
+#user-message {
+    width: 100%;
+    resize: none; /* Prevent textarea resizing */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#user-message:focus {
+    outline: none; /* Remove default outline on focus */
+    border-color: #999; /* Highlight when focused */
+}
+
+button[type="submit"] {
+    background-color: #3498db;  /* Adjust submit button color */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;  /* Darken button color on hover */
+}
+.chat-input {
+    text-align: center;
+}
+#content {
+    width: 40%;
+}
+.back-button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline from the link */
+    transition: background-color 0.2s ease-in-out; /* Add smooth transition effect */
+    position: absolute;
+    top: 20px; /* Adjust top position */
+    left: 20px; /* Adjust left position */
+}
+.go-back-button:hover {
+    background-color: #333;
+}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Author Display</title>
+  <style>
+    /* CSS code goes here */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      position: relative; /* Ensure relative positioning for absolute positioning of the home button */
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .author-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; /* Center the author boxes horizontally */
+      gap: 35px; /* Adjust the gap between author boxes */
+      margin-top: 50px;
+    }
+
+    .author-box {
+      width: 200px; /* Adjust the width of each author box */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .author-box h2 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .author-box img {
+      width: 100%; /* Ensure the image fills the container */
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .no-image {
+      text-align: center;
+      color: #666;
+    }
+
+    .no-data {
+      text-align: center;
+      color: #666;
+    }
+
+    .heading {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .sub-heading {
+      color: #555;
+    }
+    @media screen and (max-width: 800px) {
+      .heading,
+      .sub-heading {
+        margin-top: 100px; /* Add margin-top for smaller devices */
+      }
+    }
+
+    .search-container {
+      margin-top: 20px;
+    }
+
+    .search-input {
+      width: 300px;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .search-button {
+      padding: 8px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .no-data {
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .no-data-heading {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .create-author-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .create-author-button:hover {
+            background-color: #0056b3;
+        }
+        .noauthor {
+            text-align: center;
+        }
+        .go-back-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline from the link */
+            transition: background-color 0.2s ease-in-out; /* Add smooth transition effect */
+            position: absolute;
+            top: 20px; /* Adjust top position */
+            left: 20px; /* Adjust left position */
+        }
+        .go-back-button:hover {
+            background-color: #333;
+        }
+        .logout-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline from the link */
+            transition: background-color 0.2s ease-in-out; /* Add smooth transition effect */
+            position: absolute;
+            top: 20px; /* Adjust top position */
+            right: 20px; /* Adjust right position */
+        }
+        .logout-button:hover {
+            background-color: #333;
+        }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    {% if user.is_authenticated %}
+    <h1 class="heading">Hi, <span style="color: #007bff;">{{request.user}}</span> Talk with your favorite authors</h1>
+    <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    {% else %}
+    <h1 class="heading">Talk with your favorite authors</h1>
+    <a href="{% url 'login' %}" class="logout-button">Login</a>
+    {% endif %}
+    <span class="sub-heading">Get inspired, boost your knowledge</span>
+    <a href="{% url 'home' %}" class="go-back-button">Home</a>
+    <!-- Replace the search container -->
+    <div class="search-container">
+        <form action="{% url 'search_author' %}" method="GET">
+          <input type="text" name="q" class="search-input" placeholder="Search author...">
+          <button type="submit" class="search-button">Search</button>
+          
+        </form>
+    </div>
+    
+
+      
+    <div class="author-container">
+      {% if authors %}
+          {% for author in authors %}
+              <div class="author-box">
+                  <h2>{{ author.name }}</h2>
+                  <a href="{% if user.is_authenticated %}{% url 'chat_completion_author' author.name %}{% else %}{% url 'login' %}?next={{ request.path }}{% endif %}">
+                      {% if author.image %}
+                          <img src="{{ author.image.url }}" alt="{{ author.name }} Image">
+                      {% else %}
+                          <img src="{% static 'no_photo.jpg' %}" alt="Static Image">
+                      {% endif %}
+                  </a>
+              </div>
+          {% endfor %}
+      {% else %}
+      <div class="noauthor">
+          <div class="no-data">No authors found.</div>
+          <h2 class="no-data-heading">Don't worry!! You can create your Author</h2> <br>
+          <a  href="{% url 'create_author' %}" class="create-author-button">Create Author</a><br><br><br>
+          <a href="#" class="go-back-button" onclick="history.back()">Go Back</a>
+      </div>
+      {% endif %}
+  </div>
+    
+</body>
+</html>
+
+
+
+<!-- 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 -->
