@@ -1,0 +1,5 @@
+django
+groq
+requests
+Pillow
+django-environ
