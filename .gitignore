@@ -1,0 +1,50 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local development settings
+*.env
+
+# Django development artifacts
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Secret key
+*.key
+
+# Development database
+*.db
+
+# IDE-specific files
+.vscode/
+*.idea/
+*.vs/
+
+# Dependency directories
+venv/
+env/
+env2/
+env3/
+env-*/
+env_*/
+venv*/
+.venv*/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Compiled Python files
+*.pyc
+
+# Caches and lock files
+.cache/
+.lock
+
+# Other
+*.swp
